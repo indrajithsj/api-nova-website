@@ -1,0 +1,1090 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>API Nova | Next Generation API Monitoring</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<style>
+        :root {
+            --bg-primary: #0A192F;
+            --bg-secondary: #112240;
+            --bg-tertiary: #233554;
+            --text-primary: #FFFFFF;
+            --text-secondary: #8892B0;
+            --accent: #64FFDA;
+            --card-bg: rgba(23, 42, 69, 0.7);
+            --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.4), 0 10px 10px -5px rgba(0, 0, 0, 0.3);
+            --border-radius: 8px;
+            --border-radius-lg: 12px;
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            color: var(--text-primary);
+            line-height: 1.6;
+            background-color: var(--bg-primary);
+            font-family: 'Inter', 'Segoe UI', sans-serif;
+            transition: var(--transition);
+            overflow-x: hidden;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header & Navigation */
+        header {
+            background-color: rgba(10, 25, 47, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: var(--shadow);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transition: var(--transition);
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 0;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+        
+        .logo span {
+            color: var(--accent);
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 32px;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+        }
+        
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: var(--transition);
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        
+        .cta-button {
+            background: transparent;
+            color: var(--accent);
+            border: 1px solid var(--accent);
+            padding: 10px 22px;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .cta-button:hover {
+            background: rgba(100, 255, 218, 0.1);
+            transform: translateY(-2px);
+        }
+        
+        /* Hero Section */
+        .hero {
+            padding: 180px 0 100px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+        }
+        
+        .hero-content {
+            text-align: center;
+            max-width: 850px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(100, 255, 218, 0.1);
+            color: var(--accent);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            margin-bottom: 30px;
+            border: 1px solid rgba(100, 255, 218, 0.3);
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+        
+        .hero h1 .accent-text {
+            color: var(--accent);
+        }
+        
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            margin-bottom: 40px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .hero-actions {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            margin-bottom: 60px;
+        }
+        
+        .primary-btn {
+            background: transparent;
+            color: var(--accent);
+            border: 1px solid var(--accent);
+            padding: 16px 32px;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: var(--transition);
+        }
+        
+        .primary-btn:hover {
+            background: rgba(100, 255, 218, 0.1);
+            transform: translateY(-2px);
+        }
+        
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            flex-wrap: wrap;
+            margin-top: 60px;
+        }
+        
+        .stat-item {
+            text-align: center;
+            position: relative;
+            padding: 0 20px;
+        }
+        
+        .stat-item:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            right: -30px;
+            top: 50%;
+            transform: translateY(-50%);
+            height: 40px;
+            width: 1px;
+            background: linear-gradient(to bottom, transparent, var(--accent), transparent);
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--accent);
+            margin-bottom: 8px;
+        }
+        
+        .stat-label {
+            font-size: 1rem;
+            color: var(--text-secondary);
+        }
+        
+        .hero-graphic {
+            max-width: 900px;
+            margin: 60px auto 0;
+            border-radius: var(--border-radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-xl);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+        }
+        
+        .hero-graphic::before {
+            content: "API Nova Monitoring Dashboard";
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            background: rgba(10, 25, 47, 0.9);
+            color: var(--text-primary);
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            backdrop-filter: blur(10px);
+            z-index: 2;
+            border: 1px solid rgba(100, 255, 218, 0.1);
+        }
+        
+        .hero-graphic img {
+            width: 100%;
+            display: block;
+        }
+        
+        /* Animated Background Elements */
+        .floating-shapes {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .shape {
+            position: absolute;
+            opacity: 0.03;
+            border-radius: 50%;
+            filter: blur(40px);
+            background: var(--accent);
+        }
+        
+        .shape-1 {
+            width: 300px;
+            height: 300px;
+            top: -150px;
+            right: -150px;
+            animation: float 20s infinite ease-in-out;
+        }
+        
+        .shape-2 {
+            width: 200px;
+            height: 200px;
+            bottom: 100px;
+            left: -100px;
+            animation: float 15s infinite ease-in-out reverse;
+        }
+        
+        .shape-3 {
+            width: 150px;
+            height: 150px;
+            top: 50%;
+            right: 10%;
+            animation: float 25s infinite ease-in-out;
+        }
+        
+        /* Problem Section */
+        .problem {
+            padding: 120px 0;
+            position: relative;
+            background-color: var(--bg-secondary);
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+        }
+        
+        .section-title p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .problem-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .problem-card {
+            background: var(--card-bg);
+            padding: 40px 30px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            text-align: center;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            border-top: 2px solid var(--accent);
+            backdrop-filter: blur(10px);
+        }
+        
+        .problem-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .problem-icon {
+            width: 80px;
+            height: 80px;
+            background: rgba(100, 255, 218, 0.1);
+            color: var(--accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 32px;
+            transition: var(--transition);
+            border: 1px solid rgba(100, 255, 218, 0.2);
+        }
+        
+        .problem-card:hover .problem-icon {
+            background: rgba(100, 255, 218, 0.2);
+            transform: scale(1.1);
+        }
+        
+        .problem-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--text-primary);
+        }
+        
+        .problem-card p {
+            color: var(--text-secondary);
+        }
+        
+        /* Solution Section */
+        .solution {
+            padding: 120px 0;
+            position: relative;
+            background-color: var(--bg-primary);
+        }
+        
+        .solution-content {
+            display: flex;
+            align-items: center;
+            gap: 60px;
+            margin-bottom: 80px;
+        }
+        
+        .solution-text {
+            flex: 1;
+        }
+        
+        .solution-image {
+            flex: 1;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow-xl);
+            position: relative;
+            transform: perspective(1000px) rotateY(-5deg);
+            transition: var(--transition);
+            border: 1px solid rgba(100, 255, 218, 0.1);
+        }
+        
+        .solution-image:hover {
+            transform: perspective(1000px) rotateY(0);
+        }
+        
+        .solution-image img {
+            width: 100%;
+            display: block;
+        }
+        
+        .solution-text h2 {
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+        }
+        
+        .solution-text p {
+            color: var(--text-secondary);
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+        }
+        
+        .feature-list {
+            list-style: none;
+        }
+        
+        .feature-list li {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        
+        .feature-list li.animate-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .feature-list i {
+            color: var(--accent);
+            font-size: 24px;
+            margin-top: 2px;
+            flex-shrink: 0;
+        }
+        
+        .feature-content h4 {
+            font-size: 1.2rem;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+        }
+        
+        .feature-content p {
+            color: var(--text-secondary);
+            margin-bottom: 0;
+        }
+        
+        /* Waitlist Form Section */
+        .waitlist-section {
+            padding: 120px 0;
+            background: var(--bg-secondary);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .waitlist-container {
+            background: var(--card-bg);
+            border-radius: var(--border-radius-lg);
+            padding: 60px;
+            color: var(--text-primary);
+            box-shadow: var(--shadow-xl);
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(100, 255, 218, 0.1);
+        }
+        
+        .waitlist-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .waitlist-header h2 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: var(--text-primary);
+        }
+        
+        .waitlist-header p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+        
+        .urgency-banner {
+            background: rgba(100, 255, 218, 0.1);
+            color: var(--accent);
+            padding: 16px;
+            border-radius: var(--border-radius);
+            text-align: center;
+            margin-bottom: 30px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            border: 1px solid rgba(100, 255, 218, 0.2);
+        }
+        
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+            position: relative;
+        }
+        
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            transition: var(--transition);
+            background: rgba(17, 34, 64, 0.5);
+            color: var(--text-primary);
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 2px rgba(100, 255, 218, 0.2);
+        }
+        
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        .form-submit {
+            text-align: center;
+            margin-top: 30px;
+        }
+        
+        .submit-button {
+            background: transparent;
+            color: var(--accent);
+            border: 1px solid var(--accent);
+            padding: 18px 42px;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .submit-button::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(100, 255, 218, 0.1), transparent);
+            transition: 0.5s;
+        }
+        
+        .submit-button:hover::before {
+            left: 100%;
+        }
+        
+        .submit-button:hover {
+            background: rgba(100, 255, 218, 0.1);
+            transform: translateY(-2px);
+        }
+        
+        .form-note {
+            text-align: center;
+            margin-top: 20px;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--bg-primary);
+            color: white;
+            padding: 80px 0 30px;
+            border-top: 1px solid rgba(100, 255, 218, 0.1);
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 50px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-column h3 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: var(--accent);
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column li {
+            margin-bottom: 12px;
+        }
+        
+        .footer-column a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .footer-column a:hover {
+            color: var(--accent);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(100, 255, 218, 0.1);
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        
+        /* Animations */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+            100% { transform: translateY(0) rotate(0deg); }
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 968px) {
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+            
+            .solution-content {
+                flex-direction: column;
+            }
+            
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .stat-item:not(:last-child)::after {
+                display: none;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 2.3rem;
+            }
+            
+            .hero-actions {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .hero-stats {
+                gap: 30px;
+            }
+            
+            .waitlist-container {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+<!-- Header & Navigation -->
+<header>
+<div class="container">
+<nav>
+<a class="logo" href="#">
+<i class="fas fa-stars"></i>
+<span>API Nova</span>
+</a>
+<div class="nav-links">
+<a href="#problem">The Problem</a>
+<a href="#solution">Solution</a>
+<a href="#features">Features</a>
+<a href="#waitlist">Waitlist</a>
+</div>
+<div class="nav-actions">
+<button class="cta-button">Join Waitlist</button>
+</div>
+</nav>
+</div>
+</header>
+<!-- Hero Section -->
+<section class="hero">
+<div class="floating-shapes">
+<div class="shape shape-1"></div>
+<div class="shape shape-2"></div>
+<div class="shape shape-3"></div>
+</div>
+<div class="container">
+<div class="hero-content">
+<div class="hero-badge">
+<i class="fas fa-hourglass-half"></i> Exclusive Waitlist - Limited Availability
+                </div>
+<h1>Next Generation <span class="accent-text">API Monitoring</span></h1>
+<p>API Nova provides enterprise-grade API management with the simplicity you need. Stop losing data and start building reliable integrations.</p>
+<div class="hero-actions">
+<a class="primary-btn" href="#waitlist">
+<i class="fas fa-lock"></i> Join Waitlist
+                    </a>
+</div>
+<div class="hero-stats">
+<div class="stat-item">
+<div class="stat-number">99.9%</div>
+<div class="stat-label">Uptime Guarantee</div>
+</div>
+<div class="stat-item">
+<div class="stat-number">5min</div>
+<div class="stat-label">Setup Time</div>
+</div>
+<div class="stat-item">
+<div class="stat-number">0</div>
+<div class="stat-label">Sync Failures</div>
+</div>
+</div>
+</div>
+<div class="hero-graphic">
+<div style="background: var(--bg-secondary); height: 400px; display: flex; align-items: center; justify-content: center; color: var(--text-primary); font-size: 1.2rem; border: 1px solid rgba(100, 255, 218, 0.1);">
+
+</div>
+</div>
+</div>
+</section>
+<!-- Problem Section -->
+<section class="problem" id="problem">
+<div class="container">
+<div class="section-title">
+<h2>The Hidden Costs of API Integration Problems</h2>
+<p>These aren't just technical issues—they're business-critical problems with real consequences</p>
+</div>
+<div class="problem-cards">
+<div class="problem-card">
+<div class="problem-icon">
+<i class="fas fa-unlink"></i>
+</div>
+<h3>Revenue Loss</h3>
+<p>Every failed sync means lost leads, abandoned carts, and missed opportunities that directly impact your bottom line.</p>
+</div>
+<div class="problem-card">
+<div class="problem-icon">
+<i class="fas fa-tachometer-alt"></i>
+</div>
+<h3>Productivity Drain</h3>
+<p>Developers spend countless hours debugging API issues instead of building features that move your business forward.</p>
+</div>
+<div class="problem-card">
+<div class="problem-icon">
+<i class="fas fa-lock"></i>
+</div>
+<h3>Security Risks</h3>
+<p>Stale OAuth tokens and unmonitored API connections create vulnerabilities that could lead to data breaches.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Solution Section -->
+<section class="solution" id="solution">
+<div class="container">
+<div class="section-title">
+<h2>How API Nova Transforms Your API Experience</h2>
+<p>We've reimagined API integration management from the ground up</p>
+</div>
+<div class="solution-content">
+<div class="solution-text">
+<h2>Enterprise-Grade Reliability Meets Simplicity</h2>
+<p>API Nova acts as a secure middleware between your applications and APIs, handling all the complex integration challenges automatically while providing unparalleled visibility.</p>
+<ul class="feature-list">
+<li>
+<i class="fas fa-bolt"></i>
+<div class="feature-content">
+<h4>Intelligent Retry System</h4>
+<p>Failed requests are automatically retried with exponential backoff and circuit breaker patterns.</p>
+</div>
+</li>
+<li>
+<i class="fas fa-chart-pie"></i>
+<div class="feature-content">
+<h4>Real-Time Analytics</h4>
+<p>Monitor API health, track rate limits, and identify issues before they impact your business.</p>
+</div>
+</li>
+<li>
+<i class="fas fa-shield-alt"></i>
+<div class="feature-content">
+<h4>Security First</h4>
+<p>Automated OAuth token rotation and permission management keep your data secure.</p>
+</div>
+</li>
+</ul>
+</div>
+<div class="solution-image">
+<div style="background: var(--bg-secondary); height: 400px; display: flex; align-items: center; justify-content: center; color: var(--text-primary); font-size: 1.2rem; border-radius: var(--border-radius); border: 1px solid rgba(100, 255, 218, 0.1);">
+
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Waitlist Form Section -->
+<section class="waitlist-section" id="waitlist">
+<div class="container">
+<div class="waitlist-container">
+<div class="urgency-banner">
+<i class="fas fa-bolt"></i> Only 247 spots remaining at founding member pricing!
+                </div>
+<div class="waitlist-header">
+<h2>Join The API Nova Waitlist</h2>
+<p>Be the first to access our revolutionary API integration platform with exclusive founding member benefits</p>
+</div>
+<form action="https://formsubmit.co/indrajith@jsbusinessalliance.com" id="waitlist-form" method="POST">
+<!-- FormSubmit Configuration -->
+<input name="_subject" type="hidden" value="New API Nova Waitlist Signup!"/>
+<input name="_template" type="hidden" value="table"/>
+<input name="_next" type="hidden" value="https://yourwebsite.com/thank-you.html"/>
+<input name="_honey" style="display:none" type="text"/>
+<input name="_captcha" type="hidden" value="false"/>
+<div class="form-grid">
+<div class="form-group">
+<label for="name">Your Name</label>
+<input id="name" name="name" placeholder="Enter your full name" required="" type="text"/>
+</div>
+<div class="form-group">
+<label for="email">Email Address</label>
+<input id="email" name="email" placeholder="Enter your work email" required="" type="email"/>
+</div>
+<div class="form-group">
+<label for="role">Your Role</label>
+<select id="role" name="role" required="">
+<option value="">Select your role</option>
+<option value="developer">Developer/Engineer</option>
+<option value="marketing">Marketing Operations</option>
+<option value="sales">Sales Operations</option>
+<option value="it">IT Administrator</option>
+<option value="founder">Founder/Executive</option>
+<option value="other">Other</option>
+</select>
+</div>
+<div class="form-group">
+<label for="company-size">Company Size</label>
+<select id="company-size" name="company-size" required="">
+<option value="">Select company size</option>
+<option value="1-10">1-10 employees</option>
+<option value="11-50">11-50 employees</option>
+<option value="51-200">51-200 employees</option>
+<option value="201-500">201-500 employees</option>
+<option value="501-1000">501-1000 employees</option>
+<option value="1000+">1000+ employees</option>
+</select>
+</div>
+<div class="form-group">
+<label for="price">What would be a fair monthly price for this solution?</label>
+<select id="price" name="price" required="">
+<option value="">Select a price point</option>
+<option value="49">$49/month</option>
+<option value="99">$99/month</option>
+<option value="149">$149/month</option>
+<option value="199">$199/month</option>
+<option value="299">$299/month</option>
+<option value="custom">Custom Enterprise Pricing</option>
+</select>
+</div>
+<div class="form-group full-width">
+<label for="painpoints">What's your biggest API integration pain point?</label>
+<textarea id="painpoints" name="painpoints" placeholder="Describe the specific problems you're facing with API integrations, sync failures, rate limits, etc." required=""></textarea>
+</div>
+</div>
+<div class="form-submit">
+<button class="submit-button" type="submit">
+<i class="fas fa-lock"></i> Secure My Founding Member Benefits
+                        </button>
+<p class="form-note">
+<i class="fas fa-shield-alt"></i> We respect your privacy. Your information will only be used to notify you about API Nova updates.
+                        </p>
+</div>
+</form>
+</div>
+</div>
+</section>
+<!-- Footer -->
+<footer>
+<div class="container">
+<div class="footer-content">
+<div class="footer-column">
+<h3>API Nova</h3>
+<ul>
+<li><a href="#">About Us</a></li>
+<li><a href="#">Our Vision</a></li>
+<li><a href="#">Careers</a></li>
+<li><a href="#">Contact</a></li>
+</ul>
+</div>
+<div class="footer-column">
+<h3>Product</h3>
+<ul>
+<li><a href="#">Features</a></li>
+<li><a href="#">Roadmap</a></li>
+<li><a href="#">Pricing</a></li>
+<li><a href="#">Waitlist</a></li>
+</ul>
+</div>
+<div class="footer-column">
+<h3>Resources</h3>
+<ul>
+<li><a href="#">API Integration Guide</a></li>
+<li><a href="#">Blog</a></li>
+<li><a href="#">Support</a></li>
+<li><a href="#">Webinars</a></li>
+</ul>
+</div>
+<div class="footer-column">
+<h3>Legal</h3>
+<ul>
+<li><a href="#">Privacy Policy</a></li>
+<li><a href="#">Terms of Service</a></li>
+<li><a href="#">Security</a></li>
+<li><a href="#">Compliance</a></li>
+</ul>
+</div>
+</div>
+<div class="footer-bottom">
+<p>© 2023 API Nova, Inc. All rights reserved. | Next Generation API Monitoring Solutions</p>
+</div>
+</div>
+</footer>
+<script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Make the CTA button in nav scroll to waitlist form
+        document.querySelector('.cta-button').addEventListener('click', function() {
+            const waitlistSection = document.querySelector('#waitlist');
+            if (waitlistSection) {
+                window.scrollTo({
+                    top: waitlistSection.offsetTop - 80,
+                    behavior: 'smooth'
+                });
+            }
+        });
+        
+        // Animate elements when they come into view
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-in');
+                }
+            });
+        }, observerOptions);
+        
+        // Observe elements to animate
+        document.querySelectorAll('.problem-card, .feature-list li').forEach(el => {
+            observer.observe(el);
+        });
+        
+        // Form submission handling
+        const waitlistForm = document.getElementById('waitlist-form');
+        if (waitlistForm) {
+            waitlistForm.addEventListener('submit', function(e) {
+                const submitBtn = this.querySelector('button[type="submit"]');
+                const originalText = submitBtn.innerHTML;
+                
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+                submitBtn.disabled = true;
+                
+                // In a real implementation, you would handle form submission here
+                // For FormSubmit, the form will handle the submission itself
+                
+                // Re-enable button after 3 seconds (for demo purposes)
+                setTimeout(() => {
+                    submitBtn.innerHTML = originalText;
+                    submitBtn.disabled = false;
+                    alert('Thank you for joining our waitlist! We\'ll be in touch soon.');
+                    this.reset();
+                }, 3000);
+                
+                // Prevent default only for demo (remove in production)
+                e.preventDefault();
+            });
+        }
+    </script>
+</body>
+</html>
